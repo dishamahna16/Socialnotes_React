@@ -1,0 +1,83 @@
+.inputele {
+  display: block;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+  height: 100vh;
+  border: 1px solid blue;
+  justify-content: center;
+  align-items: center;
+}
+.flex.flex-grey {
+  border: 1px solid grey;
+}
+.btn {
+  display: block;
+  padding: 5px;
+  margin: 5px;
+}
+.fff {
+  border: 1px solid black;
+}
+
+.btn {
+  display: block;
+  margin-left: auto;
+  margin: auto;
+}
+
+.btn {
+  display: block;
+  margin-left: auto;
+  margin: auto;
+}
+
+.textarea {
+  width: 170px;
+  height: 150px;
+}
+
+.notes_info {
+  border: 1px solid black;
+}
+
+.notes_info {
+  border: 1px solid black;
+  display: flex;
+}
+
+.notes_info > div {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.notes_card {
+  border: 1px solid black;
+  width: 20%;
+  padding: 10px;
+}
+.all_notes {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.all_notes > div {
+  margin: 10px;
+}
+.flex {
+  display: flex;
+  width: 20%;
+  height: 100%;
+  padding: 10px;
+}
+.flex h1 {
+  padding: 10px;
+}
+.fff {
+  width: 80%;
+  height: 100%;
+  padding: 10px;
+}
