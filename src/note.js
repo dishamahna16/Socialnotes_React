@@ -1,4 +1,6 @@
+import axios from "axios";
 import React from "react";
+import { Link } from "react-router-dom";
 const notes = [
   {
     title: "Title",
@@ -6,15 +8,53 @@ const notes = [
   },
 ];
 
+const handleDelete = (id) => {
+  console.log();
+  axios
+    .post(`http://localhost:8001/delete/${id}`)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 const Notes = (props) => {
   return (
-    <div class="flex">
-      <div class="fff">
-        <h1>{props["id"]}</h1>
-        <h2>{props["email"]}</h2>
-        <h2>{props["first_name"]}</h2>
-        <h2>{props["last_name"]}</h2>
+    <div class="card text-dark bg-light mb-3">
+      <div class="card-header">{props["userEmail"]}</div>
+      <div class="card-body">
+        <h5 class="card-title">{props["heading"]}</h5>
+        <p class="card-text">{props["description"]}</p>
       </div>
+      {localStorage.getItem("userEmail") == props["userEmail"] ? (
+        <div class="buttons">
+          <Link
+            class="edit-btn"
+            to={{
+              pathname: "/editnotes",
+              state: {
+                heading: props["heading"],
+                description: props["description"],
+                id: props["id"],
+              },
+            }}
+          >
+            <button type="button" class="btn btn-info btn-sm">
+              EDIT
+            </button>
+          </Link>
+
+          <button
+            type="button"
+            class="btn btn-danger btn-sm btn-delete"
+            onClick={() => handleDelete(props["id"])}
+          >
+            DELETE
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 };

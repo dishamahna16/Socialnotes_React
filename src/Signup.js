@@ -1,23 +1,47 @@
+import axios from "axios";
 import React, { useState } from "react";
+import Navbar from "./Navbar";
 
-import { Link, withRouter } from "react-router-dom";
+import { useHistory } from "react-router";
 
 const Signup = (props) => {
+  const history = useHistory();
+
   const [name, changeName] = useState("");
   const [mobile, changeMobile] = useState("");
   const [password, changePassword] = useState("");
-
+  const [email, changeEmail] = useState("");
   const [mobileError, changeMobileError] = useState("");
 
   var phoneno = /^\d{10}$/;
 
-  const handleSignup = () => {
+  const handleSignup = (e) => {
+    e.preventDefault();
     console.log("SIGNUPP BUTTON CLICKED");
 
     // BACKEDNN OPERATION
-    console.log(props);
+    axios
+      .post("http://localhost:8001/signup", {
+        name: name,
+        mobile: mobile,
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        console.log(response);
 
-    // props.history.push("/login");
+        if (response.data.signupSuccess == true) {
+          alert("Successfully Signed Up");
+
+          console.log(props);
+          history.push("/login");
+        } else {
+          alert("Singuped Failed");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleOnChange = (e) => {
@@ -25,34 +49,72 @@ const Signup = (props) => {
   };
 
   return (
-    <div class="flex">
-      <div class="fff">
-        <form>
+    <>
+      <Navbar />
+      <form onSubmit={(e) => handleSignup(e)} className="form singupform">
+        <div class="mb-3">
+          <label for="exampleInputName" class="form-label">
+            Name
+          </label>
+
           <input
+            required
             onChange={(e) => changeName(e.target.value)}
-            class="name inputele"
-            placeholder="Name"
+            type="text"
+            class="form-control"
+            id="exampleInputName"
           />
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleInputMobile" class="form-label">
+            Mobile
+          </label>
+
           <input
+            required
             onChange={(e) => changeMobile(e.target.value)}
-            class="mobile inputele"
-            placeholder="Mobile"
+            type="text"
+            class="form-control"
+            id="exampleInputMobile"
           />
-          <div> {mobileError}</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">
+            Email address
+          </label>
+
           <input
-            onChange={(e) => changePassword(e.target.value)}
-            class="password inputele"
-            placeholder="Password"
+            required
+            onChange={(e) => changeEmail(e.target.value)}
+            type="email"
+            class="form-control"
+            id="exampleInputEmail1"
           />
-          {/* <Link to="/login"> */}
-          <button onClick={() => handleSignup()} class="btn" type="button">
-            SIGN UP
-          </button>
-          {/* </Link> */}
-        </form>
-      </div>
-    </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">
+            Password
+          </label>
+          <input
+            required
+            onChange={(e) => changePassword(e.target.value)}
+            type="password"
+            class="form-control"
+            id="exampleInputPassword1"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          Submit
+        </button>
+      </form>
+    </>
   );
 };
 
 export default Signup;
+
+//POST  emailId, password, console.log(response)

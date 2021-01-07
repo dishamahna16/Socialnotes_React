@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Note from "./note.js";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import Navbar from "./Navbar.js";
 
 var notes_initial = [
   {
@@ -9,6 +11,7 @@ var notes_initial = [
     first_name: "name 1",
     last_name: "sdfksdnf",
   },
+
   {
     id: 2,
     email: "email2",
@@ -24,38 +27,67 @@ var notes_initial = [
 ];
 
 const Notes = () => {
-  const [notes, changeNotes] = useState(notes_initial);
+  const [notes, changeNotes] = useState([]);
 
   useEffect(() => {
     axios
-      .get("https://reqres.in/api/users?page=2")
-      .then(function (response) {
-        changeNotes(response.data.data);
+      .get("http://localhost:8001/notes")
+      .then((response) => {
+        if (response) {
+          changeNotes(response.data);
+        }
       })
-      .catch(function (error) {
-        // handle error
+      .catch((error) => {
         console.log(error);
       });
   });
 
+  if (!localStorage.getItem("userEmail")) {
+    return (
+      <>
+        {" "}
+        <Navbar />
+        <h3 class="text-center">Please Login to see all the Notes</h3>{" "}
+      </>
+    );
+  }
+
+  if (typeof notes !== "object") {
+    return (
+      <>
+        <Navbar />
+        <h3 class="text-center">Add a note to show up here</h3>
+        <Link to="/addnotes" class="add-notes-btn">
+          <button class="btn  btn-dark"> Add Note</button>{" "}
+        </Link>
+      </>
+    );
+  }
+
   return (
-    <div class="all_notes">
-      {/* <Note
+    <div>
+      <Navbar />
+      <div class="all_notes">
+        {/* <Note
         userId={notes.userId}
         title={notes.title}
         completed={notes.completed}
       /> */}
 
-      {notes.map((note) => {
-        return (
-          <Note
-            id={note.id}
-            email={note.email}
-            first_name={note.first_name}
-            last_name={note.last_name}
-          />
-        );
-      })}
+        {notes.map((note) => {
+          return (
+            <Note
+              heading={note.heading}
+              description={note.description}
+              id={note.id}
+              userEmail={note.userEmail}
+            />
+          );
+        })}
+      </div>
+      <Link to="/addnotes" class="add-notes-btn">
+        <button class="btn  btn-dark"> Add Note</button>{" "}
+      </Link>
     </div>
   );
 };
