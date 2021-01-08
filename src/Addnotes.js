@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
+import { API_LINK } from "./API";
 import Navbar from "./Navbar";
 const Addnotes = () => {
   const history = useHistory();
@@ -13,7 +14,7 @@ const Addnotes = () => {
     console.log("UPLOAD BUTTON CLICKED");
 
     axios
-      .post("http://localhost:8001/addnotes", {
+      .post(`${API_LINK}/addnotes`, {
         heading: heading,
         description: description,
         userEmail: localStorage.getItem("userEmail"),

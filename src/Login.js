@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import Navbar from "./Navbar";
+import { API_LINK } from "./API";
 
 const Login = () => {
   const history = useHistory();
@@ -14,7 +15,7 @@ const Login = () => {
     console.log("LOGIN BUTTON CLICKED");
 
     axios
-      .post("http://localhost:8001/login", {
+      .post(`${API_LINK}/login`, {
         email: email,
         password: password,
       })

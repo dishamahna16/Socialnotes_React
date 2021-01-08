@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
+import { API_LINK } from "./API";
 const notes = [
   {
     title: "Title",
@@ -11,7 +12,7 @@ const notes = [
 const handleDelete = (id) => {
   console.log();
   axios
-    .post(`http://localhost:8001/delete/${id}`)
+    .post(`${API_LINK}/delete/${id}`)
     .then((response) => {
       console.log(response);
     })

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Navbar from "./Navbar";
 
 import { useHistory } from "react-router";
+import { API_LINK } from "./API";
 
 const Signup = (props) => {
   const history = useHistory();
@@ -21,7 +22,7 @@ const Signup = (props) => {
 
     // BACKEDNN OPERATION
     axios
-      .post("http://localhost:8001/signup", {
+      .post(`${API_LINK}/signup`, {
         name: name,
         mobile: mobile,
         email: email,

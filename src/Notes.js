@@ -3,6 +3,7 @@ import Note from "./note.js";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar.js";
+import { API_LINK } from "./API.js";
 
 var notes_initial = [
   {
@@ -31,7 +32,7 @@ const Notes = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8001/notes")
+      .get(`${API_LINK}/notes`)
       .then((response) => {
         if (response) {
           changeNotes(response.data);
